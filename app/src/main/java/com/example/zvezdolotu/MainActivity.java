@@ -20,23 +20,22 @@ public class MainActivity extends AppCompatActivity {
     SensorManager sensorManager;
     Sensor sensor;
     int xv=0;
-    int yv=50;
-    int xr=-50;
-    int yl=-30;
-    int xl=50;
-    int yr=-30;
-    int xvvrem=0;
-    int yvvrem=50;
-    int xrvrem=-50;
-    int ylvrem=-30;
-    int xlvrem=50;
-    int yrvrem=-30;
+    int yv=-50;
+    int xr=50;
+    int yl=10;
+    int xl=-50;
+    int yr=10;
+    int xn=0;
+    int yn=20;
     int ugol=0;
     int ugolb=0;
     int xdlina;
     int ydlina;
-    int x=240;
-    int y=427;
+    int[] y = new int[10];
+    int[] x = new int[10];
+
+    int xroc=240;
+    int yroc=480;
     float ugol1,ugol2,ugol1s,ugol2s;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
         xdlina = size.x;
 
         ydlina = size.y;
+        for(int i=0;i<10;i++){
+            x[i]=(int) ((double) 480* Math.random());
+            y[i]=(int) ((double) 800* Math.random());
+        }
     }
     @Override
     protected void onPause() { super.onPause(); sensorManager.unregisterListener(listener, sensor); }
@@ -86,22 +89,53 @@ public class MainActivity extends AppCompatActivity {
             p.setColor(Color.BLACK);
             p.setStrokeWidth(3);
             p.setTextSize(50);
-            canvas.drawText((xdlina/2)+"", 150, 525, p);
-            canvas.drawText((ydlina/2)+"", 150, 300, p);
+            //canvas.drawText((xdlina/2)+"", 150, 525, p);
+            canvas.drawText(x[0]+"", 150, 300, p);
+            if(Math.abs(ugol2)>1){
+                xroc+=ugol2*Math.sin(Math.toRadians((-1*ugol)%360));
+                yroc +=ugol2*Math.cos(Math.toRadians((-1*ugol)%360));
+            }
+            if(Math.abs(ugol1)>1){
+                if(ugol1<0) {
+                    canvas.drawLine(xv + (xdlina / 2), yv + (ydlina / 2), xr + (xdlina / 2) - Math.abs(ugol1*2), yr + (ydlina / 2) + Math.abs(ugol1*2), p);
+                    canvas.drawLine(xv + (xdlina / 2), yv + (ydlina / 2), xl + (xdlina / 2) + Math.abs(ugol1*2), yl + (ydlina / 2) - Math.abs(ugol1*2), p);
+                    canvas.drawLine(0 + (xdlina / 2), 0 + (ydlina / 2), xr + (xdlina / 2) - Math.abs(ugol1*2), yr + (ydlina / 2) + Math.abs(ugol1*2), p);
+                    canvas.drawLine(0 + (xdlina / 2), 0 + (ydlina / 2), xl + (xdlina / 2) + Math.abs(ugol1*2), yl + (ydlina / 2) - Math.abs(ugol1*2), p);
+                    canvas.drawLine(0 + (xdlina / 2), 0 + (ydlina / 2), xv + (xdlina / 2), yv + (ydlina / 2), p);
+                    canvas.drawLine(xn + (xdlina / 2), yn + (ydlina / 2), xl + (xdlina / 2)+Math.abs(ugol1*2), yl + (ydlina / 2)-Math.abs(ugol1*2), p);
+                    canvas.drawLine(xn + (xdlina / 2), yn + (ydlina / 2), xr + (xdlina / 2)-Math.abs(ugol1*2), yr + (ydlina / 2)+Math.abs(ugol1*2), p);
+
+                }
+
+                if(ugol1>0) {
+                    canvas.drawLine(xv + (xdlina / 2), yv + (ydlina / 2), xr + (xdlina / 2) - Math.abs(ugol1*2), yr + (ydlina / 2) - Math.abs(ugol1*2), p);
+                    canvas.drawLine(xv + (xdlina / 2), yv + (ydlina / 2), xl + (xdlina / 2) + Math.abs(ugol1*2), yl + (ydlina / 2) + Math.abs(ugol1*2), p);
+                    canvas.drawLine(0 + (xdlina / 2), 0 + (ydlina / 2), xr + (xdlina / 2) - Math.abs(ugol1*2), yr + (ydlina / 2) - Math.abs(ugol1*2), p);
+                    canvas.drawLine(0 + (xdlina / 2), 0 + (ydlina / 2), xl + (xdlina / 2) + Math.abs(ugol1*2), yl + (ydlina / 2) + Math.abs(ugol1*2), p);
+                    canvas.drawLine(0 + (xdlina / 2), 0 + (ydlina / 2), xv + (xdlina / 2), yv + (ydlina / 2), p);
+                    canvas.drawLine(xn + (xdlina / 2), yn + (ydlina / 2), xl + (xdlina / 2)+Math.abs(ugol1*2), yl + (ydlina / 2)+Math.abs(ugol1*2), p);
+                    canvas.drawLine(xn + (xdlina / 2), yn + (ydlina / 2), xr + (xdlina / 2)-Math.abs(ugol1*2), yr + (ydlina / 2)-Math.abs(ugol1*2), p);
+
+                }
+                ugol -= (ugol1/3);
+            }
+            for(int i=0;i<10;i++){
+                canvas.drawCircle((int) ( (xdlina/2)+(((x[i]-xroc)+(xdlina/2)) * Math.cos(Math.toRadians(ugol)) + ((y[i]-yroc)+(ydlina/2)) * Math.sin(Math.toRadians(ugol)))), (int) ( (ydlina/2)+(((y[i]-yroc)+(ydlina/2)) * Math.cos(Math.toRadians(ugol)) - ((x[i]-xroc)+(xdlina/2)) * Math.sin(Math.toRadians(ugol)))),15, p);
 
 
-            ugol += (ugol1/3);
 
-            xvvrem = (int) ((xv-x) * Math.cos(Math.toRadians(ugol)) + (yv-y) * Math.sin(Math.toRadians(ugol)));
-            yvvrem = (int) ((yv-y) * Math.cos(Math.toRadians(ugol)) - (xv-x) * Math.sin(Math.toRadians(ugol)));
-            xrvrem = (int) ((xr-x) * Math.cos(Math.toRadians(ugol)) + (yr-y) * Math.sin(Math.toRadians(ugol)));
-            yrvrem = (int) ((yr-y) * Math.cos(Math.toRadians(ugol)) - (xr-x) * Math.sin(Math.toRadians(ugol)));
-            xlvrem = (int) ((xl-x) * Math.cos(Math.toRadians(ugol)) + (yl-y) * Math.sin(Math.toRadians(ugol)));
-            ylvrem = (int) ((yl-y) * Math.cos(Math.toRadians(ugol)) - (xl-x) * Math.sin(Math.toRadians(ugol)));
-            canvas.drawLine(xvvrem+(xdlina/2), yvvrem+(ydlina/2), xrvrem+(xdlina/2), yrvrem+(ydlina/2), p);
-            canvas.drawLine(xvvrem+(xdlina/2), yvvrem+(ydlina/2), xlvrem+(xdlina/2), ylvrem+(ydlina/2), p);
-            canvas.drawLine(x+(xdlina/2), x+(ydlina/2), xrvrem+(xdlina/2), yrvrem+(ydlina/2), p);
-            canvas.drawLine(y+(xdlina/2), y+(ydlina/2), xlvrem+(xdlina/2), ylvrem+(ydlina/2), p);
+            }
+
+            if(Math.abs(ugol1)<1) {
+                canvas.drawLine(xv + (xdlina / 2), yv + (ydlina / 2), xr + (xdlina / 2), yr + (ydlina / 2), p);
+                canvas.drawLine(xv + (xdlina / 2), yv + (ydlina / 2), xl + (xdlina / 2), yl + (ydlina / 2), p);
+                canvas.drawLine(0 + (xdlina / 2), 0 + (ydlina / 2), xr + (xdlina / 2), yr + (ydlina / 2), p);
+                canvas.drawLine(0 + (xdlina / 2), 0 + (ydlina / 2), xl + (xdlina / 2), yl + (ydlina / 2), p);
+                canvas.drawLine(0 + (xdlina / 2), 0 + (ydlina / 2), xv + (xdlina / 2), yv + (ydlina / 2), p);
+                canvas.drawLine(xn + (xdlina / 2), yn + (ydlina / 2), xl + (xdlina / 2), yl + (ydlina / 2), p);
+                canvas.drawLine(xn + (xdlina / 2), yn + (ydlina / 2), xr + (xdlina / 2), yr + (ydlina / 2), p);
+
+            }
             if(ugol==359){
                 ugol=0;
             }
