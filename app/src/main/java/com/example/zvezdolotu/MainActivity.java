@@ -19,6 +19,8 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
     SensorManager sensorManager;
     Sensor sensor;
+    float speedgo=1;
+    float speedturn=1;
     int xv=0;
     int yv=-50;
     int xr=50;
@@ -27,13 +29,13 @@ public class MainActivity extends AppCompatActivity {
     int yr=10;
     int xn=0;
     int yn=20;
-    int ugol=0;
+    float ugol=0;
     int ugolb=0;
     int xdlina;
     int ydlina;
     int[] y = new int[10];
     int[] x = new int[10];
-
+    int[][] zvezdu = new int [1000][3];
     int xroc=240;
     int yroc=480;
     float ugol1,ugol2,ugol1s,ugol2s;
@@ -51,9 +53,12 @@ public class MainActivity extends AppCompatActivity {
         xdlina = size.x;
 
         ydlina = size.y;
-        for(int i=0;i<10;i++){
-            x[i]=(int) ((double) 480* Math.random());
-            y[i]=(int) ((double) 800* Math.random());
+        for(int i=0;i<1000;i++){
+
+            zvezdu[i][0] = (int) ((double) 6000 * Math.random())-3000;
+            zvezdu[i][1] = (int) ((double) 6000 * Math.random())-3000;
+            zvezdu[i][2] = (int) ((double) 25 * Math.random());
+
         }
     }
     @Override
@@ -90,11 +95,11 @@ public class MainActivity extends AppCompatActivity {
             p.setStrokeWidth(3);
             p.setTextSize(50);
             //canvas.drawText((xdlina/2)+"", 150, 525, p);
-            canvas.drawText(x[0]+"", 150, 300, p);
-            if(Math.abs(ugol2)>1){
-                xroc+=ugol2*Math.sin(Math.toRadians((-1*ugol)%360));
-                yroc +=ugol2*Math.cos(Math.toRadians((-1*ugol)%360));
-            }
+            //canvas.drawText(zvezdu[0][0]+"", 150, 300, p);
+
+            xroc+=ugol2*Math.sin(Math.toRadians((-1*ugol)%360));
+            yroc +=ugol2*Math.cos(Math.toRadians((-1*ugol)%360));
+
             if(Math.abs(ugol1)>1){
                 if(ugol1<0) {
                     canvas.drawLine(xv + (xdlina / 2), yv + (ydlina / 2), xr + (xdlina / 2) - Math.abs(ugol1*2), yr + (ydlina / 2) + Math.abs(ugol1*2), p);
@@ -117,10 +122,13 @@ public class MainActivity extends AppCompatActivity {
                     canvas.drawLine(xn + (xdlina / 2), yn + (ydlina / 2), xr + (xdlina / 2)-Math.abs(ugol1*2), yr + (ydlina / 2)-Math.abs(ugol1*2), p);
 
                 }
-                ugol -= (ugol1/3);
+
             }
-            for(int i=0;i<10;i++){
-                canvas.drawCircle((int) ( (xdlina/2)+(((x[i]-xroc)+(xdlina/2)) * Math.cos(Math.toRadians(ugol)) + ((y[i]-yroc)+(ydlina/2)) * Math.sin(Math.toRadians(ugol)))), (int) ( (ydlina/2)+(((y[i]-yroc)+(ydlina/2)) * Math.cos(Math.toRadians(ugol)) - ((x[i]-xroc)+(xdlina/2)) * Math.sin(Math.toRadians(ugol)))),15, p);
+            speedturn= (float) ((ugol1+speedturn)*0.5+(1.0-0.5)*speedturn);
+            ugol = -1*speedturn;
+
+            for(int i=0;i<1000;i++){
+                canvas.drawCircle((int) ( (xdlina/2)+(((zvezdu[i][0]-xroc)+(xdlina/2)) * Math.cos(Math.toRadians(ugol)) + ((zvezdu[i][1]-yroc)+(ydlina/2)) * Math.sin(Math.toRadians(ugol)))), (int) ( (ydlina/2)+(((zvezdu[i][1]-yroc)+(ydlina/2)) * Math.cos(Math.toRadians(ugol)) - ((zvezdu[i][0]-xroc)+(xdlina/2)) * Math.sin(Math.toRadians(ugol)))),zvezdu[i][2], p);
 
 
 
