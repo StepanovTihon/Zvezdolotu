@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mPlayer;
     MediaPlayer mPlayer2;
     MediaPlayer mPlayer3;
+    MediaPlayer mPlayer4;
     int yl=10;
     int xl=-50;
     int yr=10;
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         mPlayer= MediaPlayer.create(this, R.raw.a);
         mPlayer2= MediaPlayer.create(this, R.raw.b);
         mPlayer3= MediaPlayer.create(this, R.raw.c);
+        mPlayer4= MediaPlayer.create(this, R.raw.d);
         for(int i=0;i<1000;i++){
 
             zvezdu[i][0] = (int) ((int) ((double) 6000 * Math.random())-3000);
@@ -343,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
                         if (monsru[u][6] == 1 && Math.abs(monsru[u][0] - xroc) < xcof * 1500 && Math.abs(monsru[u][1] - yroc) < xcof * 1500) {
                             monsru[u][6] = 0;
                             ostal -= 1;
-                            mPlayer.start();
+
                             if(Math.random()*100>90){
                                 monsru[u][6]=-1;
                             }
@@ -357,6 +359,7 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     }
+                    mPlayer4.start();
                     zarad -= 1;
                     vibrator.vibrate(1000);
                     xp = 0;
@@ -393,7 +396,7 @@ public class MainActivity extends AppCompatActivity {
                 if(monsru[i][6]>0 && tmp1>(xdlina / 2)-40 && tmp1<(xdlina / 2)+40 && tmp2>(ydlina / 2)-40 && tmp2<(ydlina / 2)+40){
                     monsru[i][6]=0;
                     ostal-=1;
-                    mPlayer.start();
+
                     jizn-=monsru[i][3];
 
 
@@ -429,7 +432,7 @@ public class MainActivity extends AppCompatActivity {
                 //if(monsru[i][6]==1 && xp>0 && xp<400 && (int) ((xdlina / 2) + (((monsru[i][0] - xroc) + (xdlina / 2)) * Math.cos(Math.toRadians(ugol)) + ((monsru[i][1] - yroc) + (ydlina / 2)) * Math.sin(Math.toRadians(ugol))))-xcof*11<xcof*260 && (int) ((xdlina / 2) + (((monsru[i][0] - xroc) + (xdlina / 2)) * Math.cos(Math.toRadians(ugol)) + ((monsru[i][1] - yroc) + (ydlina / 2)) * Math.sin(Math.toRadians(ugol))))-xcof*11>xcof*220 && (int) ((ydlina / 2) + (((monsru[i][1] - yroc) + (ydlina / 2)) * Math.cos(Math.toRadians(ugol)) - ((monsru[i][0] - xroc) + (xdlina / 2)) * Math.sin(Math.toRadians(ugol))))-xcof*8<xcof*400 && (int) ((ydlina / 2) + (((monsru[i][1] - yroc) + (ydlina / 2)) * Math.cos(Math.toRadians(ugol)) - ((monsru[i][0] - xroc) + (xdlina / 2)) * Math.sin(Math.toRadians(ugol))))-xcof*8>xcof*0){
                 //    monsru[i][6]=0;
                 //    ostal-=1;
-                //    mPlayer.start();
+
 
                 //}
                 if(monsru[i][6]==-2 && monsru[i][7]<1000){
@@ -545,7 +548,7 @@ public class MainActivity extends AppCompatActivity {
                             monsru[m][6]=-2;
                         }
                         ostal-=1;
-                        mPlayer.start();
+                        mPlayer2.start();
                         puli[i][3]=0;
                         pul+=10;
                     }
