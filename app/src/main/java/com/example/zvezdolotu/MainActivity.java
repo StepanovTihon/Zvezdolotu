@@ -374,7 +374,10 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if (Math.abs(zvezdu[i][0] - xroc) < 3000.0 && Math.abs(zvezdu[i][1] - yroc) < 3000.0) {
-                        canvas.drawCircle((int) ((xdlina / 2) + (((zvezdu[i][0] - xroc) + (xdlina / 2)) * Math.cos(Math.toRadians(ugol)) + ((zvezdu[i][1] - yroc) + (ydlina / 2)) * Math.sin(Math.toRadians(ugol)))), (int) ((ydlina / 2) + (((zvezdu[i][1] - yroc) + (ydlina / 2)) * Math.cos(Math.toRadians(ugol)) - ((zvezdu[i][0] - xroc) + (xdlina / 2)) * Math.sin(Math.toRadians(ugol)))), zvezdu[i][2] + xcof * 5, p);
+                        canvas.drawCircle((int) ((xdlina / 2) + (((zvezdu[i][0] - xroc) + (xdlina / 2)) * Math.cos(Math.toRadians(ugol)) +
+                                        ((zvezdu[i][1] - yroc) + (ydlina / 2)) * Math.sin(Math.toRadians(ugol)))), (int) ((ydlina / 2) +
+                                        (((zvezdu[i][1] - yroc) + (ydlina / 2)) * Math.cos(Math.toRadians(ugol)) - ((zvezdu[i][0] - xroc) +
+                                        (xdlina / 2)) * Math.sin(Math.toRadians(ugol)))), zvezdu[i][2] + xcof * 5, p);
 
                     }
                     if (Math.abs(zvezdu[i][0] - xroc) > 3000.0 || Math.abs(zvezdu[i][1] - yroc) > 3000.0) {
